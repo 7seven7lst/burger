@@ -42,9 +42,10 @@ var Burger = sequelize.define('burger', {
         console.log("error inserting burger");
       })
     },
-    updateOne: function(id, updatedBurger) {
-      return this.findOne({where: {id:id}})
-      .then(burger=>burger.updateAttributes(updatedBurger))
+    updateOne: function(query, updatedBurger) {
+      this.update(updatedBurger, {
+        where: query
+      })
       .then(response=>{
         console.log("burger has been updated");
       })
