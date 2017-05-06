@@ -1,9 +1,9 @@
 'use strict';
 
-var BaseTypes = require('sequelize/lib/data-types');
-var util = require('util');
+const BaseTypes = require('sequelize/lib/data-types');
+const util = require('util');
 
-var TIMESTAMP = function() {
+const TIMESTAMP = function() {
   if (!(this instanceof TIMESTAMP)) {
     return new TIMESTAMP();
   }

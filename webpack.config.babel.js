@@ -2,9 +2,10 @@ import path from 'path';
 import webpack from 'webpack';
 
 export default {
+  devtool: 'eval',
   entry: './src/index.js',
   output: {
-    path: path.resolve('./dist'),
+    path: path.join(__dirname , 'dist'),
     filename: 'index.js'
   },
   resolve: {

@@ -1,10 +1,11 @@
-var Sequelize = require("sequelize");
-var _ = require('lodash');
+'use strict';
+const Sequelize = require("sequelize");
+const _ = require('lodash');
 // sequelize (lowercase) references our connection to the DB.
-var sequelize = require("../config/connection.js");
-var customDataTypes = require('../db/sequelize-mysql-timestamp.js');
+const sequelize = require("../config/connection.js");
+const customDataTypes = require('../db/sequelize-mysql-timestamp.js');
 
-var Burger = sequelize.define('burger', {
+let Burger = sequelize.define('burger', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -31,14 +32,14 @@ var Burger = sequelize.define('burger', {
   classMethods: {
     selectAll: function() {
       return this.findAll({})
-      .then(data => _.map(data, d=>d.toJSON()))
+      .then(data => _.map(data, d => d.toJSON()))
     },
     insertOne: function(newBurger) {
       return this.build(newBurger).save()
-      .then(response=>{
+      .then(response => {
         console.log("burger has been inserted");
       })
-      .catch(error=>{
+      .catch(error => {
         console.log("error inserting burger");
       })
     },
@@ -46,10 +47,10 @@ var Burger = sequelize.define('burger', {
       this.update(updatedBurger, {
         where: query
       })
-      .then(response=>{
+      .then(response => {
         console.log("burger has been updated");
       })
-      .catch(error=>{
+      .catch(error => {
         console.log("error updating burger");
       })
     }

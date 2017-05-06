@@ -1,23 +1,24 @@
-var _ = require('lodash');
-var Burger = require('./models/burger.js');
-var express = require("express");
-var bodyParser = require("body-parser");
-var path = require('path');
+'use strict';
+const _ = require('lodash');
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require('path');
+
+const PORT = process.env.PORT || 8080;
+let Burger = require('./models/burger.js');
 // Sets up the Express App
 // =============================================================
-var app = express();
-var PORT = process.env.PORT || 8080;
+let app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // Static directory
 app.use(express.static("./dist"));
+require("./controllers/burgers_controller.js")(app);
 
-app.get('/', (req, res) =>{
-  res.sendFile(path.join(__dirname, './dist/index.html'));
-})
-
+/*
 console.log(Burger);
 Burger.selectAll()
 .then(function(data){
@@ -25,6 +26,7 @@ Burger.selectAll()
   
   console.log(data);
 })
+*/
 
 /*
 Burger.insertOne({

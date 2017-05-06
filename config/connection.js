@@ -2,9 +2,10 @@
 // CONNECTION.JS - THIS FILE INITIATES THE CONNECTION TO MYSQL
 // *********************************************************************************
 // Dependencies
-var Sequelize = require("sequelize");
+'use strict';
+const Sequelize = require("sequelize");
 // Creates mySQL connection using Sequelize
-var sequelize = new Sequelize("burgers_db", "root", "password", {
+let sequelize = new Sequelize("burgers_db", "root", "password", {
   host: "localhost",
   dialect: "mysql",
   pool: {
