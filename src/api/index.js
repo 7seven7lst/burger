@@ -1,55 +1,41 @@
 import { v4 } from 'node-uuid';
+import * as axios from 'axios';
 
 // This is a fake in-memory implementation of something
 // that would be implemented by calling a REST server.
 
-const fakeDatabase = {
-  todos: [{
-    id: v4(),
-    text: 'hey',
-    completed: true,
-  }, {
-    id: v4(),
-    text: 'ho',
-    completed: true,
-  }, {
-    id: v4(),
-    text: 'let’s go',
-    completed: false,
-  }],
-};
-
-const delay = (ms) =>
-  new Promise(resolve => setTimeout(resolve, ms));
-
-export const fetchTodos = (filter) =>
-  delay(500).then(() => {
+export const fetchBurgers = filter =>
+  axios.get('/api/all')
+  .then(response => {
+    let burgers = response.data;
+    console.log("burgers>>>", burgers);
     switch (filter) {
       case 'all':
-        return fakeDatabase.todos;
-      case 'active':
-        return fakeDatabase.todos.filter(t => !t.completed);
-      case 'completed':
-        return fakeDatabase.todos.filter(t => t.completed);
+        return burgers;
+      case 'available':
+        return burgers.filter(b => !b.devoured);
+      case 'devoured':
+        return burgers.filter(b => b.devoured);
       default:
         throw new Error(`Unknown filter: ${filter}`);
     }
+  })
+  .catch(error => {
+    throw new Error(`Unable to get burgers from backend`);
   });
 
-export const addTodo = (text) =>
-  delay(500).then(() => {
-    const todo = {
-      id: v4(),
-      text,
-      completed: false,
-    };
-    fakeDatabase.todos.push(todo);
-    return todo;
-  });
+export const addBurger = newBurger =>
+  axios.post('/api/add/burger', newBurger)
+    .then(response => response.data)
+    .catch(error => {
+      throw new Error(`Unable to save burger to backend`);
+    });
 
-export const toggleTodo = (id) =>
-  delay(500).then(() => {
-    const todo = fakeDatabase.todos.find(t => t.id === id);
-    todo.completed = !todo.completed;
-    return todo;
-  });
+export const updateBurger = id => {
+  console.log("updatedBurger is>>>>", id);
+  return axios.post(`/api/update/burger/${id}`, {devoured:true})
+    .then(response => response.data)
+    .catch(error => {
+      throw new Error(`Unable to update burger to backend`);
+    });
+}

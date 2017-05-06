@@ -30,17 +30,23 @@ Burger.selectAll()
 
 /*
 Burger.insertOne({
-  burger_name: 'Teriyaki Beef Burger',
+  burger_name: 'Veggie Burgers',
   devoured: false,
-  date: `2017-05-03 22:00:34`,
+  date: `2017-05-04 22:00:34`,
+})
+.then(response=> {
+  console.log("inserted response is>>>>", response);
 })
 */
 
 /*
 Burger.updateOne({id:6}, {
-  burger_name: 'Teriyaki Beef Burger',
+  burger_name: 'Teriyaki Chicken Burger',
   devoured: false,
-});
+})
+.then(response=>{
+  console.log("updated response is >>>>", response);
+})
 */
 
 app.listen(PORT, () => {

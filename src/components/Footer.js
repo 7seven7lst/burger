@@ -9,12 +9,12 @@ const Footer = () => (
       All
     </FilterLink>
     {", "}
-    <FilterLink filter="active">
-      Active
+    <FilterLink filter="available">
+      Available
     </FilterLink>
     {", "}
-    <FilterLink filter="completed">
-      Completed
+    <FilterLink filter="devoured">
+      Devoured
     </FilterLink>
   </p>
 );

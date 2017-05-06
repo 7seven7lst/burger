@@ -4,20 +4,21 @@ import createList, * as fromList from './createList';
 
 const listByFilter = combineReducers({
   all: createList('all'),
-  active: createList('active'),
-  completed: createList('completed'),
+  available: createList('available'),
+  devoured: createList('devoured'),
 });
 
-const todos = combineReducers({
+const burgers = combineReducers({
   byId,
   listByFilter,
 });
 
-export default todos;
+export default burgers;
 
-export const getVisibleTodos = (state, filter) => {
+export const getVisibleBurgers = (state, filter) => {
   const ids = fromList.getIds(state.listByFilter[filter]);
-  return ids.map(id => fromById.getTodo(state.byId, id));
+  console.log("ids >>>>", ids);
+  return ids.map(id => fromById.getBurger(state.byId, id));
 };
 
 export const getIsFetching = (state, filter) =>

@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import Footer from './Footer';
-import AddTodo from './AddTodo';
-import VisibleTodoList from './VisibleTodoList';
+import AddBurger from './AddBurger';
+import VisibleBurgerList from './VisibleBurgerList';
 
 const App = () => (
   <div>
-    <AddTodo />
-    <VisibleTodoList />
+    <AddBurger />
+    <VisibleBurgerList />
     <Footer />
   </div>
 );

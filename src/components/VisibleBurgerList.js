@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actions from '../actions';
-import { getVisibleTodos, getErrorMessage, getIsFetching } from '../reducers';
-import TodoList from './TodoList';
+import { getVisibleBurgers, getErrorMessage, getIsFetching } from '../reducers';
+import BurgerList from './BurgerList';
 import FetchError from './FetchError';
 
-class VisibleTodoList extends Component {
+class VisibleBurgerList extends Component {
   componentDidMount() {
     this.fetchData();
   }
@@ -18,16 +18,17 @@ class VisibleTodoList extends Component {
   }
 
   fetchData() {
-    const { filter, fetchTodos } = this.props;
-    fetchTodos(filter);
+    const { filter, fetchBurgers } = this.props;
+    fetchBurgers(filter);
   }
 
   render() {
-    const { isFetching, errorMessage, toggleTodo, todos } = this.props;
-    if (isFetching && !todos.length) {
+    const { isFetching, errorMessage, toggleBurger, burgers } = this.props;
+    console.log("toggleBurger is>>>", toggleBurger);
+    if (isFetching && !burgers.length) {
       return <p>Loading...</p>;
     }
-    if (errorMessage && !todos.length) {
+    if (errorMessage && !burgers.length) {
       return (
         <FetchError
           message={errorMessage}
@@ -37,21 +38,21 @@ class VisibleTodoList extends Component {
     }
 
     return (
-      <TodoList
-        todos={todos}
-        onTodoClick={toggleTodo}
+      <BurgerList
+        burgers={burgers}
+        onBurgerClick={toggleBurger}
       />
     );
   }
 }
 
-VisibleTodoList.propTypes = {
-  filter: PropTypes.oneOf(['all', 'active', 'completed']).isRequired,
+VisibleBurgerList.propTypes = {
+  filter: PropTypes.oneOf(['all', 'available', 'devoured']).isRequired,
   errorMessage: PropTypes.string,
-  todos: PropTypes.array.isRequired,
+  burgers: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  fetchTodos: PropTypes.func.isRequired,
-  toggleTodo: PropTypes.func.isRequired,
+  fetchBurgers: PropTypes.func.isRequired,
+  toggleBurger: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, { params }) => {
@@ -59,14 +60,14 @@ const mapStateToProps = (state, { params }) => {
   return {
     isFetching: getIsFetching(state, filter),
     errorMessage: getErrorMessage(state, filter),
-    todos: getVisibleTodos(state, filter),
+    burgers: getVisibleBurgers(state, filter),
     filter,
   };
 };
 
-VisibleTodoList = withRouter(connect(
+VisibleBurgerList = withRouter(connect(
   mapStateToProps,
   actions
-)(VisibleTodoList));
+)(VisibleBurgerList));
 
-export default VisibleTodoList;
+export default VisibleBurgerList;

@@ -1,4 +1,4 @@
 import { Schema, arrayOf } from 'normalizr';
 
-export const todo = new Schema('todos');
-export const arrayOfTodos = arrayOf(todo);
+export const burger = new Schema('burgers');
+export const arrayOfBurgers = arrayOf(burger);

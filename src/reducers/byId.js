@@ -2,7 +2,7 @@ const byId = (state = {}, action) => {
   if (action.response) {
     return {
       ...state,
-      ...action.response.entities.todos,
+      ...action.response.entities.burgers,
     };
   }
   return state;
@@ -10,4 +10,4 @@ const byId = (state = {}, action) => {
 
 export default byId;
 
-export const getTodo = (state, id) => state[id];
+export const getBurger = (state, id) => state[id];

@@ -1,30 +1,31 @@
 import { combineReducers } from 'redux';
 
-const createList = (filter) => {
-  const handleToggle = (state, action) => {
-    const { result: toggledId, entities } = action.response;
-    const { completed } = entities.todos[toggledId];
+const createList = filter => {
+  const handleDevour = (state, action) => {
+    const { result: devouredId, entities } = action.response;
+    const { devoured } = entities.burgers[devouredId];
     const shouldRemove = (
-      (completed && filter === 'active') ||
-      (!completed && filter === 'completed')
+      (devoured && filter === 'available') ||
+      (!devoured && filter === 'devoured')
     );
     return shouldRemove ?
-      state.filter(id => id !== toggledId) :
+      state.filter(id => id !== devouredId) :
       state;
   };
 
   const ids = (state = [], action) => {
     switch (action.type) {
-      case 'FETCH_TODOS_SUCCESS':
+      case 'FETCH_BURGERS_SUCCESS':
         return filter === action.filter ?
           action.response.result :
           state;
-      case 'ADD_TODO_SUCCESS':
-        return filter !== 'completed' ?
+      case 'ADD_BURGER_SUCCESS':
+        console.log("ADD_BURGER SUCCSSS, action is >>>>", action, state);
+        return filter !== 'devoured' ?
           [...state, action.response.result] :
           state;
-      case 'TOGGLE_TODO_SUCCESS':
-        return handleToggle(state, action);
+      case 'UPDATE_BURGER_SUCCESS':
+        return handleDevour(state, action);
       default:
         return state;
     }
@@ -35,10 +36,10 @@ const createList = (filter) => {
       return state;
     }
     switch (action.type) {
-      case 'FETCH_TODOS_REQUEST':
+      case 'FETCH_BURGERS_REQUEST':
         return true;
-      case 'FETCH_TODOS_SUCCESS':
-      case 'FETCH_TODOS_FAILURE':
+      case 'FETCH_BURGERS_SUCCESS':
+      case 'FETCH_BURGERS_FAILURE':
         return false;
       default:
         return state;
@@ -50,10 +51,10 @@ const createList = (filter) => {
       return state;
     }
     switch (action.type) {
-      case 'FETCH_TODOS_FAILURE':
+      case 'FETCH_BURGERS_FAILURE':
         return action.message;
-      case 'FETCH_TODOS_REQUEST':
-      case 'FETCH_TODOS_SUCCESS':
+      case 'FETCH_BURGERS_REQUEST':
+      case 'FETCH_BURGERS_SUCCESS':
         return null;
       default:
         return state;

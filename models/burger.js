@@ -36,19 +36,21 @@ let Burger = sequelize.define('burger', {
     },
     insertOne: function(newBurger) {
       return this.build(newBurger).save()
-      .then(response => {
+      .then(dbNewBurger => {
         console.log("burger has been inserted");
+        return dbNewBurger.toJSON();
       })
       .catch(error => {
         console.log("error inserting burger");
       })
     },
     updateOne: function(query, updatedBurger) {
-      this.update(updatedBurger, {
+      return this.update(updatedBurger, {
         where: query
       })
-      .then(response => {
+      .then(dbUpdatedBurger => {
         console.log("burger has been updated");
+        return dbUpdatedBurger.toJSON();
       })
       .catch(error => {
         console.log("error updating burger");

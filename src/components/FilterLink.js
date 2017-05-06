@@ -14,7 +14,7 @@ const FilterLink = ({ filter, children }) => (
 );
 
 FilterLink.propTypes = {
-  filter: PropTypes.oneOf(['all', 'completed', 'active']).isRequired,
+  filter: PropTypes.oneOf(['all', 'available', 'devoured']).isRequired,
   children: PropTypes.node.isRequired,
 };
 
