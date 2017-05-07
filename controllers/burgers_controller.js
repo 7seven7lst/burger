@@ -1,6 +1,7 @@
 'use strict';
 const path = require('path');
-let Burger = require('../models/burger.js');
+let db = require("../models");
+console.log("db.burger is>>>>", db.burger);
 
 module.exports = app => {
   app.get('/', (req, res) => {
@@ -8,7 +9,7 @@ module.exports = app => {
   });
 
   app.get('/api/all', (req, res) => {
-    Burger.selectAll()
+    db.burger.selectAll()
     .then(data => res.json(data))
   })
 
@@ -18,7 +19,7 @@ module.exports = app => {
       devoured: req.body.devoured, 
       date: req.body.date,
     };
-    Burger.insertOne(newBurger)
+    db.burger.insertOne(newBurger)
     .then(dbNewBurger=>{
       res.json(dbNewBurger);
     })
@@ -26,16 +27,15 @@ module.exports = app => {
 
   app.post('/api/update/burger/:id', (req, res) => {
     const id = req.params.id;
-    console.log("id is >>>>", id);
     const updatedBurger = {
       id: id,
       burger_name: req.body.burger_name, 
       devoured: true,
       date: req.body.date,
     }
-    Burger.updateOne({id:id}, {devoured: true})
+    db.burger.updateOne({id:id}, {devoured: true})
     .then(response=>{
-      Burger.findOne({where: {id:id} })
+      db.burger.findOne({where: {id:id} })
       .then(response=>{
         res.json(response.toJSON());
       })
